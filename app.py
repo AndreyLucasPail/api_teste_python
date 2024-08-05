@@ -2,56 +2,75 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-livros = [
+movies = [
     {
         "id":1,
-        "titulo" : "livro1",
-        "autor" : "joao",
+      "nome": "A Viagem de Chihiro",
+      "imagem": "https://br.web.img3.acsta.net/pictures/210/527/21052756_20131024195513383.jpg"
     },
+    {
+      "nome": "Ponyo",
+      "imagem": "https://m.media-amazon.com/images/I/61ry7KsRfIS._AC_SL1000_.jpg"
+    },  
     {
         "id":2,
-        "titulo" : "livro2",
-        "autor" : "joao2",
-    },
+      "nome": "Meu Amigo Totoro",
+      "imagem": "https://i0.wp.com/studioghibli.com.br/wp-content/uploads/2020/04/meu-amigo-totoro-dvd-vers%C3%A1til.jpg"
+    },  
     {
         "id":3,
-        "titulo" : "livr3",
-        "autor" : "joao3",
+      "nome": "Princesa Mononoke",
+      "imagem": "https://i0.wp.com/studioghibli.com.br/wp-content/uploads/2020/04/Princesa-Mononoke-DVD-capa-vers%C3%A1til.jpg"
+    },  
+    {
+        "id":4,
+      "nome": "Castelo Animado",
+      "imagem": "https://capas.nyc3.cdn.digitaloceanspaces.com/650-5000245618508.jpg"
+    },  
+    {
+        "id":5,
+      "nome": "A Viagem de Chihiro",
+      "imagem": "https://br.web.img3.acsta.net/pictures/210/527/21052756_20131024195513383.jpg"
+    },
+    {
+        "id":6,
+      "nome": "As Memórias de Marnie",
+      "imagem": "https://www.itaucinemas.com.br/_img/_filmes/1859_capa.jpg"
     }
 ]
 
-@app.route("/livros", methods= ["GET"])
-def get_books():
-    return jsonify(livros)
+@app.route("/movies", methods= ["GET"])
+def get_movie():
+    return jsonify(movies)
 
-@app.route("/livros/<int:id>", methods=["GET"])
-def get_book_by_id(id: int):
-    for book in livros:
-        if book.get("id") == id:    
-            return jsonify(book)
+@app.route("/movies/<int:id>", methods=["GET"])
+def get_movie_by_id(id: int):
+    for movie in movies:
+        if movie.get("id") == id:    
+            return jsonify(movie)
 
-@app.route("/livros/<int:id>", methods=["PUT"])
-def update_books_by_id(id: int):
-    changed_book = request.get_json()
+@app.route("/movies/<int:id>", methods=["PUT"])
+def update_movie_by_id(id: int):
+    changed_movie = request.get_json()
 
-    for index, book in enumerate(livros):
-        if book.get("id") == id:
-            livros[index].update(changed_book)
-            return jsonify(livros[index])
+    for index, movie in enumerate(movies):
+        if movie.get("id") == id:
+            movies[index].update(changed_movie)
+            return jsonify(movies[index])
         
-@app.route("/livros", methods=["POST"])        
-def add_book():
-    new_book = request.get_json()
+@app.route("/movies", methods=["POST"])        
+def add_movie():
+    new_movie = request.get_json()
 
-    livros.append(new_book)
+    movies.append(new_movie)
 
-    return jsonify(livros)
+    return jsonify(movies)
 
-app.route("/livros/<int:id>", methods=["DELETE"])
-def delete_book(id: int):
-    for index, book in livros:
-        if book.get("id") == id:
-            del livros[index]
-    return jsonify(livros)
+app.route("/movies/<int:id>", methods=["DELETE"])
+def delete_movie(id: int):
+    for index, movie in movies:
+        if movie.get("id") == id:
+            del movies[index]
+    return jsonify(movies)
 
 app.run(port=5000, host="localhost", debug=True)
